@@ -28,11 +28,14 @@ To democratize cryptocurrency trading by providing sophisticated, data-driven in
 
 ### Core Microservices
 
-1. **Data Ingestion Service**
+📘 [Architectural Blueprint](ARCHITECTURE_OVERVIEW.md)
+📘 [Technical Decisions](TECHNICAL_DECISIONS.md)
 
-   - Collect real-time price data
-   - Normalize cross-exchange information
-   - High-performance data streaming
+### Core Microservices Landscape
+
+- Collect real-time price data
+- Normalize cross-exchange information
+- High-performance data streaming
 
 2. **Market Analysis Service**
 
@@ -122,210 +125,14 @@ helm install prometheus prometheus-community/kube-prometheus-stack
 
 ### 5. Build Docker Images
 
-```bash
-# Build all microservices
-make build-all
-
-# Build specific service
-make build SERVICE=market-data-service
-
-# Push to local registry
-make push-local
-```
-
-### 6. Deploy Services
-
-```bash
-# Deploy entire platform
-make deploy-platform
-
-# Deploy specific microservice
-make deploy SERVICE=trading-signal-service
-
-# Deploy with custom configuration
-kubectl apply -f kubernetes/services/market-data-service/deployment.yaml
-```
-
-## Configuration Management
-
-### Environment Variables
-
-Create `.env` file with following configurations:
-
-```ini
-# Kafka Configuration
-KAFKA_BOOTSTRAP_SERVERS=kafka:9092
-KAFKA_TOPIC_REPLICATION_FACTOR=3
-
-# Database Configurations
-POSTGRES_HOST=postgresql
-POSTGRES_PORT=5432
-REDIS_HOST=redis
-
-# Security
-JWT_SECRET=your_super_secret_key
-ENCRYPTION_KEY=your_encryption_key
-
-# Monitoring
-PROMETHEUS_ENDPOINT=http://prometheus:9090
-```
-
-### Kubernetes Secrets
-
-```BASH
-# Generate Kubernetes Secrets
-kubectl create secret generic cipherhorizon-secrets \
-    --from-literal=jwt-secret=$JWT_SECRET \
-    --from-literal=encryption-key=$ENCRYPTION_KEY
-```
-
-### Database Initialization
-
-```bash
-# Initialize Databases
-kubectl apply -f kubernetes/database/postgresql-init.yaml
-kubectl apply -f kubernetes/database/redis-init.yaml
-
-# Run Database Migrations
-make db-migrate
-```
-
-## Service Deployment Strategies
-
-### Helm Chart deployment
-
-```bash
-# Install Helm Chart
-helm install cipherhorizon ./helm/cipherhorizon \
-    --namespace trading \
-    --create-namespace \
-    --values helm/values.yaml
-```
-
-### Canary Deployment
-
-```bash
-# Deploy Canary Version
-kubectl apply -f kubernetes/canary/market-data-service-canary.yaml
-```
-
-## Monitoring and Logging
-
-### Prometheus Metrics
-
-```bash
-# Port forward Prometheus
-kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090:9090
-```
-
-### ELK Logging
-
-```bash
-# Deploy ELK Stack
-kubectl apply -f kubernetes/logging/elk-stack.yaml
-```
-
-## Scaling Configuration
-
-```yaml
-# Horizontal Pod Autoscaler Example
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: market-data-service
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: market-data-service
-  minReplicas: 2
-  maxReplicas: 10
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        targetAverageUtilization: 70
-```
-
-## Troubleshooting
-
-### Common Commands
-
-```bash
-# Check Service Status
-kubectl get pods -n trading
-
-# View Logs
-kubectl logs -f deployment/market-data-service
-
-# Describe Deployment
-kubectl describe deployment market-data-service
-```
-
-### Debugging Tips
-
-- Use `kubectl describe` for detailed resource information
-- Check container logs for errors
-- Verify network policies and secrets
-- Ensure resource constraints are appropriate
-
-## Security Recommendations
-
-### Network policies
-
-```bash
-# Apply Network Policies
-kubectl apply -f kubernetes/network-policies/
-```
-
-### TLS Configuration
-
-```bash
-# Install Cert Manager
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/cert-manager.yaml
-```
-
-## Cost Optimization
-
-### Resource Quotas
-
-```yaml
-apiVersion: v1
-kind: ResourceQuota
-metadata:
-  name: cipherhorizon-quota
-spec:
-  hard:
-    requests.cpu: "4"
-    requests.memory: 8Gi
-    limits.cpu: "8"
-    limits.memory: 16Gi
-```
-
-## Continuous Deployment
-
-### GitHub Actions Workflow
-
-```yaml
-name: Deploy to Kubernetes
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl config set-cluster k8s
-          kubectl config set-credentials admin
-          kubectl apply -f kubernetes/
-```
+📘 [Full Deployment Guide](DEPLOYMENT_GUIDE.md)
 
 ## Additional Resources
 
 - [Kubernetes Documentation](https://kubernetes.io/docs/)
 - [Helm Charts](https://helm.sh/docs/)
 - [Docker Best Practices](https://docs.docker.com/develop/best-practices/)
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE.md](LICENSE) for details.
