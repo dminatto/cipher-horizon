@@ -26,40 +26,238 @@ To democratize cryptocurrency trading by providing sophisticated, data-driven in
 
 ## 🔧 Technical Architecture
 
-### Core Microservices
-
-📘 [Architectural Blueprint](ARCHITECTURE_OVERVIEW.md)
-📘 [Technical Decisions](TECHNICAL_DECISIONS.md)
+CipherHorizon employs a sophisticated, domain-driven microservices architecture designed to provide a comprehensive cryptocurrency trading analytics platform with high performance, scalability, and resilience.
 
 ### Core Microservices Landscape
 
-- Collect real-time price data
-- Normalize cross-exchange information
-- High-performance data streaming
+![Core Microservices Landscape](assets/core-microservices-landscape.png)
 
-2. **Market Analysis Service**
+### Detailed Summary
 
-   - Complex trend analysis
-   - Statistical modeling
-   - Predictive algorithms
+#### 1. [Market Data Service](microservices/01-market-data-service.md)
 
-3. **Trading Signal Generator**
+#### Key Functionalities
 
-   - Strategy implementation
-   - Risk-weighted signal scoring
-   - Automated trading recommendations
+- Collect cryptocurrency market data from multiple exchanges
+- Normalize and standardize market information
+- High-frequency data ingestion
+- Real-time price tracking
 
-4. **Risk Management Service**
+##### Performance Characteristics
 
-   - Portfolio risk assessment
-   - Position sizing recommendations
-   - Automated risk mitigation
+- Latency: < 50ms per data point
+- Throughput: 10,000+ trades/second
+- Support for 20+ cryptocurrency exchanges
 
-## 🧭 Getting Started
+#### 2. [Trading Signal Service](microservices/02-trading-signal-service.md)
 
-### Prerequisites
+##### Key Functionalities
 
-#### Local Development Environment
+- Generate trading signals
+- Evaluate market conditions
+- Implement multiple trading strategies
+- Risk-weighted signal scoring
+
+##### Performance Characteristics
+
+- Multi-model signal generation
+- Confidence score calculation
+- Real-time strategy adaptation
+- Machine learning-powered insights
+
+#### 3. [Risk Management Service](microservices/03-risk-management-service.md)
+
+##### Key Functionalities
+
+- Comprehensive portfolio risk assessment
+- Calculate advanced risk metrics
+- Provide risk-adjusted recommendations
+- Implement dynamic risk thresholds
+
+##### Performance Characteristics
+
+- Multi-dimensional risk analysis
+- Real-time risk scoring
+- Adaptive risk management
+- Predictive risk modeling
+
+#### 4. [Portfolio Tracking Service](microservices/04-portfolio-tracking-service.md)
+
+##### Key Functionalities
+
+- Manage user investment portfolios
+- Track asset performance
+- Calculate comprehensive portfolio metrics
+- Provide investment insights
+
+##### Performance Characteristics
+
+- Real-time portfolio valuation
+- Multi-asset class support
+- Historical performance tracking
+- Benchmark comparison
+
+#### 5. [User Management Service](microservices/05-user-management-service.md)
+
+##### Key Functionalities
+
+- User authentication and authorization
+- Profile management
+- Secure access control
+- Multi-factor authentication
+
+##### Performance Characteristics
+
+- Adaptive authentication
+- Secure token management
+- Compliance verification
+- Anomaly detection
+
+#### 6. [Compliance Service](microservices/06-compliance-service.md)
+
+##### Key Functionalities
+
+- Regulatory monitoring
+- Transaction compliance checking
+- Anti-money laundering (AML) verification
+- Suspicious activity detection
+
+##### Performance Characteristics
+
+- Real-time compliance verification
+- Multi-dimensional risk assessment
+- Regulatory reporting
+- Machine learning-powered pattern recognition
+
+### Inter-Service Communication Architecture
+
+#### Communication Protocols
+
+- **Primary Protocol**: gRPC
+- **Event Streaming**: Apache Kafka
+- **Serialization**: Protocol Buffers
+
+#### Communication Patterns
+
+- Event-driven architecture
+- Asynchronous messaging
+- Eventual consistency model
+
+### Performance Design Principles
+
+#### Scalability Strategies
+
+- Horizontal pod scaling
+- Stateless service design
+- Dynamic resource allocation
+- Multi-region deployment
+
+#### Optimization Techniques
+
+- Intelligent caching
+- Parallel processing
+- Efficient serialization
+- Minimal external dependencies
+
+### Security and Compliance
+
+#### Multi-Layer Security
+
+- Network-level protection
+- Service authentication
+- Data encryption
+- Comprehensive audit logging
+
+#### Compliance Considerations
+
+- Regulatory monitoring
+- Data privacy protection
+- Transparent security mechanisms
+
+## ☁️ Deployment Guide
+
+CipherHorizon offers a flexible, robust deployment strategy designed to accommodate diverse infrastructure needs and technological environments.
+
+### 🌐 Deployment Options
+
+#### 1. Local Development
+
+- **Ideal for**: Developers, Researchers, Proof of Concept
+- **Environments**:
+  - Minikube
+  - Kind
+  - Docker Desktop Kubernetes
+- **Setup Time**: 30-60 minutes
+- **Resource Requirements**:
+  - 4+ CPU cores
+  - 8GB+ RAM
+  - 50GB+ Disk Space
+
+#### 2. Cloud Deployment
+
+- **Supported Providers**:
+  - Amazon Web Services (EKS)
+  - Google Cloud Platform (GKE)
+  - Microsoft Azure (AKS)
+  - DigitalOcean Kubernetes
+
+### 🚀 Deployment Strategies
+
+#### Kubernetes-Native Deployment
+
+- **Containerization**: Docker
+- **Orchestration**: Kubernetes
+- **Scaling**: Horizontal Pod Autoscaler
+- **Update Mechanism**: Rolling Updates
+
+#### Deployment Modes
+
+1. **Development Mode**
+
+   - Minimal resource configuration
+   - Local testing
+   - Simplified setup
+
+2. **Production Mode**
+
+   - High-availability configuration
+   - Multi-region support
+   - Advanced security features
+   - Comprehensive monitoring
+
+### 📦 Key Deployment Components
+
+#### Infrastructure
+
+- **Microservices**: 6 core services
+- **Event Streaming**: Apache Kafka
+- **Service Communication**: gRPC
+- **Data Serialization**: Protocol Buffers
+
+#### Performance Targets
+
+- **API Response Time**: < 500ms
+- **Scalability**: Millions of records
+- **Performance Degradation**: < 10%
+
+### 🔒 Security Considerations
+
+#### Multi-Layer Security
+
+- Network-level protection
+- Service authentication
+- Data encryption
+- Comprehensive audit logging
+
+#### Compliance
+
+- GDPR considerations
+- Financial data protection
+- Anonymized user data handling
+
+### 💻 Prerequisites
+
+#### Development Environment
 
 - Docker (v20.10+)
 - Kubernetes Cluster (Minikube/Kind/K3s)
@@ -68,62 +266,53 @@ To democratize cryptocurrency trading by providing sophisticated, data-driven in
 - Git
 - Python 3.9+
 - Golang 1.17+
-- Node.js 16+ (for frontend)
 
-#### Cloud Deployment Options
-
-- AWS EKS
-- Google GKE
-- Azure AKS
-- DigitalOcean Kubernetes
-
-## ☁️ Deployment
-
-### 1. Clone Repository
+### 🛠️ Quick Start
 
 ```bash
-git clone https://github.com/yourusername/cipherhorizon.git
-cd cipherhorizon
+# Clone the repository
+git clone https://github.com/cipherhorizon/platform.git
+cd platform
+
+# Initialize local Kubernetes cluster
+make setup-local-cluster
+
+# Deploy CipherHorizon
+make deploy-platform
 ```
 
-### 2. Environment Configuration
+### 📊 Monitoring and Observability
 
-```bash
-# Copy environment template
-cp .env.example .env
+#### Integrated Monitoring
 
-# Generate secrets
-make generate-secrets
-```
+- Prometheus
+- Grafana
+- ELK Stack
+- Distributed Tracing
 
-### 3. Local Kubernetes Cluster Setup
+### 💡 Unique Deployment Features
 
-```bash
-# Option 1: Minikube
-minikube start --cpus 4 --memory 8192
+1. **Adaptive Scaling**
 
-# Option 2: Kind
-kind create cluster --config kubernetes/kind-config.yaml
+   - Automatic resource allocation
+   - Performance-based scaling
+   - Cost-efficient infrastructure
 
-# Option 3: K3s
-k3s server --docker
-```
+2. **Multi-Cloud Support**
 
-### 4. Infrastructure Dependencies
+   - Cloud-agnostic architecture
+   - Seamless migration
+   - Vendor-neutral design
 
-```bash
-# Install Kubernetes Operators
-kubectl apply -f kubernetes/operators/
+3. **Continuous Deployment**
 
-# Install Cert Manager
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/cert-manager.yaml
+   - GitHub Actions integration
+   - Automated testing
+   - Seamless updates
 
-# Install Prometheus Monitoring
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm install prometheus prometheus-community/kube-prometheus-stack
-```
+### 🔍 Detailed Documentation
 
-### 5. Build Docker Images
+For comprehensive deployment instructions, configuration details, and troubleshooting:
 
 📘 [Full Deployment Guide](DEPLOYMENT_GUIDE.md)
 
